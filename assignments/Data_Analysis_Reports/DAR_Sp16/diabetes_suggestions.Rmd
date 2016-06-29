@@ -1,0 +1,143 @@
+---
+title: "Suggestions for the Diabetes Team"
+author: "Homer White"
+date: "April 8, 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(tigerstats)
+library(tigerData)
+library(tigerTree)
+knitr::opts_chunk$set(echo = TRUE)
+# also need package plyr
+```
+
+# Remove Variables?
+
+Some predictor variables might not meet the criteria for your project (for example, they might not be easily measured in a doctor's office).  If you find such variables, you can remove them from the data frame.  for example, suppose that `diabetes` includes the useless variable **badVar**.  Then you can remove it as follows:
+
+```{r eval = FALSE}
+diabetes$badVar <- NULL
+```
+
+# Divide Your Data
+
+Most likely, you began by building a tree model for all of your data, and then you looked for nodes where the proportion of persons with diabetes was fairly high.  These are the "high risk" groups.  But don't forget:
+
+* You will probably want to make several tree models and decide which one you like best.
+* Then you will want to see how well your favorite tree model does on new people.  After all, a tree performs better on the data that was used to build it than it would on new observations.
+
+Hence you will need to divide your data into:
+
+* a training set, on which you can build as many trees as you like;
+* a quiz set that you will use to compare the trees you built so you can select the one you like best;
+* a test set you can use to estimate how your favorite tree model would perform on new people.
+
+So divide your data correctly at the beginning.  Make sure you load the package `tigerTree` and then run something like:
+
+```{r}
+dfs <- divideTrainTest(seed = 3030, prop.train = 0.6, prop.quiz = 0.2, data = diabetes)
+dTrain <- dfs$train
+dQuiz <- dfs$quiz
+dTest <- dfs$test
+```
+
+# Choose Your Tree
+
+You can use the `tuneTree` app to build your tree models on the training set and try them out on the quiz set:
+
+```{r eval = FALSE}
+tuneTree(diabetic ~ ., data = dTrain, testSet = dQuiz, truth = dQuiz$diabetic)
+```
+
+The app will let you capture the R-code for your favorite.  *Important:  Do not try to run the app in an R Markdown document.  It's for interactive use only.*
+
+As you compare models, through, you probably don't want to look at just the mis-classification rate.  You might want to keep an eye on the mean residual deviance:  the lower it is, the better the tree is doing at making pure nodes, most of which will be all or almost all composed of people without diabetes.  There should be a few other nodes where the percentage of folks with diabetes is somewhat high, and these correspond to high-risk groups.
+
+# Evaluate Your Tree
+
+Suppose you end up with this model:
+
+```{r}
+tr.model <- tree(diabetic ~ ., data = dTrain,
+		control = tree.control(
+			nobs = nrow(dTrain), mincut = 200,
+			minsize = 400, mindev = 0.01))
+```
+
+The graph is in Figure 1.
+
+```{r, fig.cap = "A possible favorite model."}
+plot(tr.model); text(tr.model)
+```
+
+As you can see, the tree has eight nodes.  Here's a detailed view of the mode:
+
+```{r}
+tr.model
+```
+
+Let's say that you decide to call a node "high-risk" if the percentage of people in it who have diabetes exceeds 20%.  (I'm not saying that percentage is the only thing you should consider when you decide what a high-risk group is, I'm just trying to give an example.) Then your high-risk nodes are node (28) and node (15):
+
+```
+28) bpd < 73.5 331  393.1 no ( 0.719033 0.280967 ) *
+15) fmhm_other > 1.05669 354  483.1 no ( 0.573446 0.426554 ) *
+```
+
+But how would the nodes look on *new* people?  This is where your test set comes in.  You need to apply your tree to the test set, and figure out the proportions of diabetic and non-diabetic folks in each of the nodes of the tree.  Here's how to accomplish this.
+
+First, run the following code, which teaches R a few new functions:
+
+```{r}
+nodeNumbers <- function(mod) {
+  left_splits <- mod$frame$splits[, 1]
+  nodes_lines <- mod$frame[left_splits == "",]
+  as.numeric(row.names(nodes_lines))
+}
+
+nodeRows <- function(mod) {
+  sort(as.numeric(unique(mod$where)))
+}
+
+distAtNodes <- function(mod, df, resp_varname) {
+  nodes_by_row <- predict(mod, newdata = df, type = "where")
+  nodes_by_num <- plyr::mapvalues(nodes_by_row,
+                                  from = nodeRows(mod),
+                                  to   = nodeNumbers(mod))
+  tempDF <- data.frame(node = nodes_by_num, response = df[, resp_varname])
+  names(tempDF)[2] <- resp_varname
+  tab <- eval(parse(
+    text = paste0("xtabs(~ node + ",resp_varname, ", data = tempDF)")))
+  tab
+}
+```
+
+
+Now you can use the `distAtNodes()` function to get a nice tables that gives the distribution of **diabetic** (yes/no) at each of the nodes, for the training set.  You give this function the tree model, the training data frame, and the name of the response variable in quotes:
+
+```{r}
+tabTr <- distAtNodes(tr.model, dTrain, "diabetic")
+tabTr
+rowPerc(tabTr)
+```
+
+You can use the same function to get the distribution of **diabetic** at each of the nodes, for the test set:
+
+```{r}
+tabTest <- distAtNodes(tr.model, dTest, "diabetic")
+tabTest
+rowPerc(tabTest)
+```
+
+You can see that the nodes we defined as "high-risk" based on the training data are still "high-risk" when the tree model was applied to the test set.  There is quite a bit of variability, though, and you might want to think about why that is so.
+
+
+
+
+
+
+
+
+
+

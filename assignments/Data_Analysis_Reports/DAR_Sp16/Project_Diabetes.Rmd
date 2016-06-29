@@ -1,0 +1,44 @@
+---
+title: 'Project:  Diabetes'
+author: "Dr. Homer White"
+date: "24 Febuary, 2016"
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 3.5
+    fig_width: 4
+  html_document:
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 5
+---
+
+
+# The Situation
+
+Diabetes is an increasingly serious health issue in the developed world, and especially in the United States.  Physicians need to be alert to the signs of diabetes in their patients, and should be able to identify people who are at high risk for diabetes---even though they might not yet have the disease---so that they can be counselled to eat more healthily, tested more frequently for diabetes, etc.
+
+
+## Your Information
+
+Learn about the `diabetes` data frame:
+
+```{r eval=FALSE}
+library(tigerData)
+data(diabetes)
+View(diabetes)
+help(diabetes)
+```
+
+This data frame contains a great deal of health-related information on 9096 non-pregnant individuals.  It also records, for each individual, whether or not he/she has diabetes.
+
+
+## Your Task
+
+Construct a procedure that a doctor could apply in order to identify people who are at high risk for diabetes.  You should use your judgement as to what constitutes "high risk", but be prepared to back up your choice.  (Obviously it's not smart to define high risk as any risk greater than 0%, because then doctors would be counselling and testing all of their patients, thus driving up the cost of health care!)
+
+Doctors have access to computers, so it's OK if your procedure is fairly complex, but one can make the case that doctors are more likely to use a simple procedure that can be quickly applied and that can be explained easily to a patient who is found to be at high risk for diabetes.
+
+The procedure should be one that a doctor can apply to a patient using information gathered during an office visit, interviewing the patient, and maybe some fairly simple lab tests.
+
+In addition to constructing the procedure, you should apply numerical and graphical techniques to indicate why your procedure makes sense.  This will help convince doctors to use the procedure.  You should also provide some reliable estimates of how well the procedure is liable to work on patients similar to the ones in your data set.  This too, could be useful in persuading doctors to use your procedure.

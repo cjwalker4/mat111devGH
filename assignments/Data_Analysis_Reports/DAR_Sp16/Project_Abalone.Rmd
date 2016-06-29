@@ -1,0 +1,40 @@
+---
+title: 'Project:  Abalones'
+author: "Dr. Homer White"
+date: "24 Febuary, 2016"
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 3.5
+    fig_width: 4
+  html_document:
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 5
+---
+
+
+# The Situation
+
+Marine biologists like to study abalones.  When one encounters a group of abalones in the wild it is often important for the biologist to know roughly how old each of the individuals are.  Unfortunately it's very difficult to know the exact age of an abalone:  you have cut up the abalone's shell (thus killing the abalone), stain the shell and look at in through a microscope to count some very small rings that are made to appear through the staining process.
+
+Most marine biologists would be satisfied with an estimate of the age of abalone based on physical characteristics that are easily measured.
+
+
+## Your Information
+
+Learn about the `haliotis` data frame:
+
+```{r eval=FALSE}
+library(tigerData)
+data(haliotis)
+View(haliotis)
+help(haliotis)
+```
+
+This data frame contains information on 2923 abalones.  One of the variables measured is the age of the abalone.  (Presumably the age was obtained through the drawn-out procedure described in the previous section.)
+
+
+## Your Task
+
+Construct a procedure that a biologist can use to quickly estimate the age of an abalone.  You should provide a reliable estimate of about how much the actual age of the abalone is liable to differ from the the estimate provided by the procedure.  Some marine biologists are a bit wary of statisticians, so you should apply numerical and graphical techniques to indicate to them why your procedure makes sense.

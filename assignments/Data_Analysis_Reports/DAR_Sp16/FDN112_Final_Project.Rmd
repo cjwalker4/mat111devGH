@@ -1,0 +1,81 @@
+---
+title: 'The Final Project'
+author: "Dr. Homer White"
+date: "24 Febuary, 2016"
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 3.5
+    fig_width: 4
+  html_document:
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 5
+---
+
+
+## Final Project:  General Facts
+
+* The project is done in teams.
+* Teams can be self-chosen.
+* Each team must either three or four members, except by special permission of the instructor.
+* Each team chooses one of the following three projects (described in separate documents):
+    * Abalones
+    * Diabetes
+    * Mushrooms
+* No project can have more than two teams working on it, so the principle of first-come-first served will apply.  If you want to your first-choice project, then it is to your advantage to form your team early and announce your team members and project choice to the instructor.
+* Once the team has formed, it will be assigned at letter and a number based on the assigned project. For example, if two teams are allowed to work on the Abalones project, then they will be named "A1" and "A2".
+
+## Project Structure and Other Requirements
+
+The project takes the form of a Data Analysis Report, so previous guidelines concerning DARs apply here.  In particular your report should consists of the following sections:
+
+* Introduction
+* Methods
+* Results
+* Conclusion/Discussion
+* References
+
+Each team will have a designated "author".  (Please indicate to me who the author is when you form your team.)
+
+The author is responsible for submitting an R Markdown document to me, in a folder to be specified later.
+
+The document should be named using the team designation and project topic, e.g.:
+
+>`A2_Abalones.Rmd`
+
+The document should knit beautifully to pdf.  A title and date should be provided in the YAML front matter.  Also, the author field of the YAML front matter should contain the first and last names of all team members, by alphabetical order of last name.
+
+
+In additional, after the project is submitted each team member shall send me an email.  The email should give:
+
+* Your team designation
+* The names of each of your other three team members, along with your comments about what each person contributed to the project and a numerical rating of each person's contribution, on a scale of 1 to 10, where 1 represents no contribution and 10 represents excellent contribution.
+
+Failure to submit a email result in a lower individual grade.
+
+## Grading
+
+Your individual grade is based on:
+
+* The grade assigned to the project itself.  (This counts for a lot, unless you are rated as contributing poorly to the project.)
+* Your team-mates' assessment of your contribution to the project.  Excellent ratings raise your grade a bit.  Poor ratings lower your grade by a lot!
+* Whether or not you submitted an email assessing your team-mates.  (This counts for a bit.)
+
+If there is time at the end of the semester, we will set aside a day for project presentations.  Each presentation would be no more than 10 minutes in length, and all team members must speak during the presentation.  The presentation is done from the front of the room, using the pdf version of the submitted Report.
+
+If presentations occur then then your part in the presentation will also contribute to your individual grade---probably about 10%.
+
+## Timeline
+
+* March 24, 12 noon:  **deadline for announcing your team and choosing your project**.  You may rate the projects in order of preference.  This will help me in case I have to have to give a team a project other than their first choice.  *Students who have not formed a team by the deadline will have be assigned to teams by me, and assigned projects by me.  They will also receive an automatic 10% grade-deduction.*
+* April 26.  **Last day for Draft Consultations.** You have the option (but are not required) to submit one draft to me and to meet with me for a draft consultation.  No meetings or draft evaluation can occur after the April 26 deadline.  If your team decides to participate in the draft-consultation process, it should submit a draft and schedule a meeting well in advance of the dealdine.  *Requests and submissions just before the deadline might not be accomodated!*
+* May 3, 12 noon:  **deadline for project submission.**  Stiff grade deductions apply to late submissions.
+* May 3, 1 pm:  **deadline for submission of email rating your team-mates.**
+* May 5:  **Project Presentation** in class(if time permits).
+
+## Honor Code Advisory
+
+You may work with other team members as much as you like, but you may not communicate about project matters with any member of any other team, *even if he/she is working on a different project topic.*  In particular, keep your methods and results to yourselves!!  If you are having trouble on something, consult with other team members or with me.  Do not consult with anyone else in the class.
+
+

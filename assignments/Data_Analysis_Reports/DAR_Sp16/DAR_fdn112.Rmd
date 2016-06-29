@@ -1,0 +1,121 @@
+---
+title: 'Data Analysis Assignment:  Wages'
+author: "Dr. White"
+date: "02 Febuary, 2016"
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 3.5
+    fig_width: 4
+  html_document:
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 5
+---
+
+```{r include=FALSE}
+require(tigerstats)
+library(knitr)
+```
+
+## Assignment
+
+This assignment is a study of the data frame `CPS85` from the `mosaicData` package.  Learn more about it with the R commands:
+
+```{r eval=FALSE}
+data(CPS85)
+View(CPS85)
+help(CPS85)
+```
+
+`CPS85` gives data on 534 people, who were selected randomly from the millions of people who filled out the Current Population Survey in 1985.  You may think of it as essentially a random sample from the population of all United States adults.  Note that the variable **wage** gives the hourly wage for each person in the survey.
+
+Your assignment involves using `CPS85` to investigate the question of whether women are the victims of wage discrimination.  If a man and a woman are alike in all respects---age, education, work experience, type of job, etc.---that might affect wage, does the man still make more money?
+
+## Structure of the Report
+
+Your report must consist of four (or five) sections, as follows:
+
+* an Introduction;
+* a Methods section;
+* a Results section;
+* a Conclusion/Discussion section.
+* a Bibliography (if you have made use of any books or websites outside of the regular course materials).
+
+These sections are described in more detail below.
+
+### Introduction
+
+In the Introduction you describe the Research Question that you have been assigned to investigate, and discuss why the question is worth investigating.  You should also introduce the reader to the `CPS85` data set, giving the reader a reasonable amount of background information on the data and how it was collected.  You might also want to indicate to the reader why the question of wage discrimination is not necessarily answered simply by comparing the wages of the men in the study with the wages of all of the women in the study.
+
+You might have some graphs or tables in this section, but only to help the reader understand the Research Question itself.  Don't start trying to solve the Research Question in your Introduction.
+
+### Methods
+
+In this section you will broadly describe the graphical and numerical tools that you plan to use in order to investigate the relationship (if any) between sex and wages.  Your discussion should be specific enough that the reader gets an idea of how you plan to take into account possible confounding factors such as education, age, type of employment, etc.
+
+The methods section is also the right place to alert the reader to any unusual features of your data, especially if they result in a decision on your part to modify the original data set (i.e., to exclude a outlier).  If you need to make a graph or table to point these features out to the reader, it's OK to do so in this section, but don't actually start solving the question itself.
+
+### Results
+
+This is where you get to down to business.  Apply what you have learned to far to investigate the Research Question from both graphical and numerical points of view.
+
+Do an analysis prior to writing your first draft of the report, so that you know how you want to answer the Research Question.  (Think of your answer as your "thesis" in a thesis-driven essay.)  Then argue your way to your answer, using elements of the analysis---graphs and tables---to back your reasoning.
+
+All graphs and tables should be introduced to the reader before they are displayed.  After you make a graph or table, discuss it:  show how it relates to your research question and helps you make the case for your thesis.
+
+#### Graphs
+
+Graphs should have a brief, descriptive title, or a caption (sometimes it's good to have both).  Stduy the code chunk in the Rmd document that made this graph:
+
+```{r echo = F, fig.cap="Combined box-and-whiskers and violin plats of the fastest speed one has ever driven a car, for the 71 participants in a survey of Georgetown College students.  The individual values are shown as well, and are jittered to minimize over-plotting."}
+bwplot(fastest ~ sex,
+	data = m111survey,
+	panel = function(..., box.ratio) {
+		panel.bwplot(..., fill = NULL, box.ratio = 0.1, do.out = FALSE)
+		panel.violin(..., col = "burlywood", border = "grey60", 
+		             alpha = 0.5, varwidth = FALSE)
+		panel.stripplot(..., jitter.data = TRUE)},
+	main = "Fastest Speed, by Sex",
+	xlab = "Sex of Student",
+	ylab = "Fastest Speed Driven (mph)")
+```
+
+The caption should explain features in your graph that will help the reader to interpret it.
+
+Label your axes well.  For numerical variables give units if you know them.
+
+#### A Tip on Tables
+
+You can get nice tables using the `kable()` function from the `knitr` package.  Read the Rmd document and study the code chunk that made this table:
+
+```{r echo = F}
+sexSeat <- xtabs(~ sex + seat, data = m111survey)
+kable(sexSeat, caption = "Cross-table of sex and seating preference, for students in the `m111survey` data frame.")
+```
+
+Note that the `kable()` function allows you to assign a caption to your table.
+
+#### A Note on Code Chunks
+
+Make sure that you hide all of the your code from your reader using the chunk option `echo = FALSE`.  Note that the initial code chunk that loads packages has options that not only hide the code but also prevent console-messages from getting into your knitted document.
+
+### Discussion and Conclusion
+
+In this section you will pull together the results from the previous section and draw an overall conclusion.  You should add further thoughts.  In particular:
+
+* Are there any objections to your thesis that you are unable to fully answer because the `CPS85` data frame does not have the data you would need? Explain these carefully and indicate what sort of data you would need in order to investigate the question further.
+* Did any other interesting Research Questions occur to you along the way, as you analyzed the `CPS85` data?  If so, you might want to address one of them briefly, here.
+
+### References
+
+If you use any external sources, cite them in a consistent way.  (You may use whatever citation-style you have learned in your composition classes.)  Include all cited sources in the References section at the end of your report.
+
+## Other Instructions and Remarks
+
+When you are done, knit the document into a pdf file.  (Documents that do not knit have a code problem, and are liable to be grade down.)  Download the document onto your computer and print it out.  You will turn it in in class on the due date.  Also, make sure that the final copy of your R Markdown document is saved into your Submit folder.
+I will collect the R Markdown documents electronically on the due date.
+
+A grading rubric will be provided. The rubric applies to both the draft and final version, but the grading scale for the draft version is a bit more easygoing.
+
+A sample data analysis report (including the R Markdown source document) may be found in the Common Folder.  Use it as a guide to organization, argumentation, and composition in R Markdown.

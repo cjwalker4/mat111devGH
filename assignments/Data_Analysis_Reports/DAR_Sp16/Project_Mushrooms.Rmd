@@ -1,0 +1,48 @@
+---
+title: 'Project:  Mushrooms'
+author: "Dr. Homer White"
+date: "24 Febuary, 2016"
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 3.5
+    fig_width: 4
+  html_document:
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 5
+---
+
+
+
+# The Situation
+
+You are young Native American about to set out on a Vision Quest.  You expect to wander alone in the vast and mysterious rain forests of the Pacific Northwest for a period of two weeks or more.  Food will be in short supply, so you figure that you will subsist largely on the mushrooms that grow abundantly in the wilderness.  Unfortunately many of the mushrooms are poisonous:  if by chance you consume a poisonous mushroom then you will get pretty ill.  If you consume several such mushrooms, you might become too weak to make it back home.
+
+Of course you could stick to just a few familiar varieties of mushroom that you know for sure are edible.  But unfortunately such mushrooms are not common in the areas where you plan to wander.  If you eat only familar mushrooms, you could easily starve to death.
+
+You need to devise a procedure for deciding whether or not a given mushroom is poisonous or edible, based on easily-observed features of the mushroom.  This rule should be:
+
+* **Simple**:  you should be able to write it on a sheet of paper and apply it quickly.  (You can use both sides of the paper if you like.)
+* **Sensitive**:  If a mushroom is poisonous, there should be a very high probability that the procedure would tel you not to eat it.
+*  **Specific**:  If a mushroom is edible, then there should be a very high probability that the procedure would tell you to eat it.
+
+## Your Information
+
+Fortunately you know R, and you have a large data set available to you:
+
+
+```{r eval=FALSE}
+library(tigerData)
+data(shrooms)
+View(shrooms)
+help(shrooms)
+```
+
+The `shrooms` data frame contains information on thousands of individual mushrooms, and may be considered to be representative of the mushrooms you are likely to come across during your Quest.
+
+## Your Task
+
+Use the data to construct the decision procedure that you need.  You must also provide a reliable of estimate how well the procedure will work during your Quest.
+
+In addition to the estimate, you should apply numerical and graphical techniques to indicate why your procedure makes sense.
