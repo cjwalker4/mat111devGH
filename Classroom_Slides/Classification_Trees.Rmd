@@ -282,26 +282,10 @@ Trees can work with any number of explanatory (predictor) variables.  Each predi
 
 Let's use all the other variables in `m111survey`!
 
-## Wait a minute ...
-
-... trees don't like missing values.
-
-Let's remove the missing values as follows:
-
-```{r}
-mComp <- subset(m111survey, complete.cases(m111survey))
-```
-
-We removed a couple of rows:
-
-```{r}
-nrow(mComp)
-```
-
 ## Use All Other Variables
 
 ```{r eval = FALSE}
-trSex2 <- tree(sex ~ ., data = mComp)
+trSex2 <- tree(sex ~ ., data = m111survey)
 plot(trSex2); text(trSex2)
 ```
 
@@ -310,7 +294,7 @@ Note that we are sticking with the default values of `control`.
 ## The Result
 
 ```{r echo = FALSE}
-trSex2 <- tree(sex ~ ., data = mComp)
+trSex2 <- tree(sex ~ ., data = m111survey)
 plot(trSex2); text(trSex2)
 ```
 
@@ -326,7 +310,7 @@ Lead-up info:
 
 ```
 Classification tree:
-tree(formula = sex ~ ., data = mComp)
+tree(formula = sex ~ ., data = m111survey)
 Variables actually used in tree construction:
 [1] "ideal_ht" "GPA"      "fastest" 
 Number of terminal nodes:  4 
@@ -364,14 +348,25 @@ The 3/68 sounds great, but if this is how the tree did *on the same data that wa
 
 If you used the tree to predict *new* observations of a similar sort, it probably would not do as well.
 
+## Missing Observations
+
+Wait a minute!  The error rate was "3 out of 68".  But `m111survey` has 71 observations:
+
+```{r}
+nrow(m111survey)
+```
+
+It turns out that three observations were missing values for predictor variables, so R could not use them to check the tree.  This will happen frequently.
+
+
 ## Control Your Tree
 
 Let's allow the tree to grow "big" (i.e., have as many terminal nodes as possible).
 
 ```{r eval = FALSE}
-trSex3 <- tree(sex ~ ., data = mComp,
+trSex3 <- tree(sex ~ ., data = m111survey,
                control = tree.control(
-                 nobs = nrow(mComp),
+                 nobs = nrow(m111survey),
                  mincut = 1,
                  minsize = 2,
                  mindev = 0
@@ -382,9 +377,9 @@ plot(trSex3); text(trSex3)
 ## The Model
 
 ```{r echo = FALSE}
-trSex3 <- tree(sex ~ ., data = mComp,
+trSex3 <- tree(sex ~ ., data = m111survey,
                control = tree.control(
-                 nobs = nrow(mComp),
+                 nobs = nrow(m111survey),
                  mincut = 1,
                  minsize = 2,
                  mindev = 0
