@@ -136,7 +136,7 @@ seatResults
 ## Investigate the Simulations
 
 ```{r}
-favstats(~sims,data=seatResults)[c("mean","sd","n")]
+favstats(seatResults$sims)[c("mean","sd","n")]
 ```
 
 Sure enough:
@@ -217,7 +217,7 @@ nullProbs <- rep(1/6,times=6)
 dieResults <- chisqtestGC(obs,p=nullProbs,
             simulate.p.value=TRUE, B=3000,
             graph=TRUE)
-favstats(~sims,data=dieResults)[c("mean","sd","n")]
+favstats(dieResults$sims,data=dieResults)[c("mean","sd","n")]
 ```
 
 Pretty close!
